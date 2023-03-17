@@ -5,3 +5,4 @@ if __name__ == '__main__':
     print(userRepository.userList)
     from src.com.python.study.classStudy.SMain2 import test
     test()
+    print("git test")
