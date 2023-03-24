@@ -1,3 +1,7 @@
+from src.com.python.Authentication.main.SignUp import SignUp
+from src.com.python.Authentication.main.SignIn import SignIn
+from src.com.python.Authentication.main.Home import Home
+
 if __name__ == "__main__":
     while True:
         print("=====<< Python Auth >>=====")
@@ -10,9 +14,12 @@ if __name__ == "__main__":
         if select == 'q':
             break;
         elif select == '1':
-            pass
+            if SignIn.signIn():
+                Home.home()
+            else:
+                print("사용자의 정보를 확인해주세요. 계정이 없다면 회원가입해주세요.")
         elif select == '2':
-            pass
+            SignUp.signUp()
         else:
             print("다시 입력하세요.")
         print("===========================")
