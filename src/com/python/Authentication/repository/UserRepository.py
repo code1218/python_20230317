@@ -42,11 +42,33 @@ class UserRepository:
 
     @classmethod
     def updateUser(cls, user):
-        pass
+        connection = DBConnectionConfig.getConnection()
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        sql = '''
+            update user
+            set
+                password = %s,
+                name = %s,
+                email = %s
+            where
+                username = %s
+        '''
+        cursor.execute(sql, (user.password, user.name, user.email, user.username))
+        connection.commit()
 
     @classmethod
-    def removeUserByUsername(cls,):
-        pass
+    def removeUserByUsername(cls, username):
+        connection = DBConnectionConfig.getConnection()
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        sql = '''
+            delete
+            from
+                user
+            where
+                username = %s
+        '''
+        cursor.execute(sql, (username, ))
+        connection.commit()
 
 
 
