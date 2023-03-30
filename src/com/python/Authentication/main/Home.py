@@ -1,3 +1,4 @@
+from src.com.python.Authentication.config.GlobalConfig import GlobalConfig
 from src.com.python.Authentication.security.PrincipalUser import PrincipalUser
 from src.com.python.Authentication.main.MyPage import MyPage
 
@@ -5,7 +6,8 @@ class Home:
 
     @staticmethod
     def home():
-        while True:
+        flagIndex = GlobalConfig.addLoopFlag()
+        while GlobalConfig.loopFlagList[flagIndex]:
             print("=====<< Home >>=====")
             print(f"접속한 사용자이름: {PrincipalUser.session.get('username')}")
             print("====================")

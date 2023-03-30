@@ -1,6 +1,7 @@
 from src.com.python.Authentication.security.PrincipalUser import PrincipalUser
 from src.com.python.Authentication.repository.UserRepository import UserRepository
 from src.com.python.Authentication.entity.User import User
+from src.com.python.Authentication.entity.UserDetail import UserDetail
 
 class ModifyUser:
 
@@ -19,6 +20,7 @@ class ModifyUser:
             print("=====<< ModifyUser >>=====")
             print("1. 기본정보 수정")
             print("2. 비밀번호 수정")
+            print("3. 상세정보 수정")
             print("b. 뒤로가기")
             print("====================")
             select = input("Menu Selected!! >>> ")
@@ -28,6 +30,8 @@ class ModifyUser:
                 ModifyUser.updateBasicInformation()
             elif select == "2":
                 ModifyUser.updatePassword()
+            elif select == "3":
+                ModifyUser.updateDetailInformation()
             else:
                 print("다시 입력하세요.")
             print("===========================")
@@ -101,8 +105,28 @@ class ModifyUser:
         비밀번호 변경 완료되었습니다. 메세지 출력
         '''
 
+    @staticmethod
+    def updateDetailInformation():
+        print("수정하지 않으려면 빈값으로 enter를 눌러주세요.")
+        phone = input("phone >>> ")
+        address = input("address >>> ")
+        gender = input("gender >>> ")
 
+        if len(phone.replace(' ', '') + address.replace(' ', '') + gender.replace(' ', '')) == 0:
+            print("수정사항이 없습니다.")
+            return
 
+        userDict = PrincipalUser.session;
+        userDetail = UserDetail(
+            userDict.get("user_id"),
+            phone if len(phone.replace(' ', '')) > 0 else userDict.get("phone"),
+            address if len(address.replace(' ', '')) > 0 else userDict.get("address"),
+            gender if len(gender.replace(' ', '')) > 0 else userDict.get("gender")
+        )
+
+        UserRepository.updateUserDetail(userDetail)
+        PrincipalUser.setSession(UserRepository.findUserByUsername(userDict.get("username")))
+        print("회원 정보가 수정되었습니다.")
 
 
 
